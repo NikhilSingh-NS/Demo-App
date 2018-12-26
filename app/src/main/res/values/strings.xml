@@ -1,0 +1,39 @@
+<resources>
+
+    <string name="app_name">Restaurants App</string>
+    <string name="action_login">Login</string>
+
+    <string name="pls_wait">Please Wait...</string>
+    <string name="see_all">See All</string>
+
+    <string name="price_for_two">Price for 2: ₹ %1$s</string>
+
+    <string name="review">Review</string>
+    <string name="photo">Photo</string>
+    <string name="been_here">Been Here</string>
+    <string name="share">Share</string>
+    <string name="rate_place">Rate this place</string>
+
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+
+    <string name="details">Details</string>
+    <string name="address">Address</string>
+
+    <string name="avg_cost_lbl">AVERAGE COST</string>
+    <string name="avg_cost">%1$s for two people(approx.) with alcohol</string>
+
+    <string name="avg_cost_short"> ₹ %1$s for two people(approx.)</string>
+
+    <string name="bogo_offers">BOGO Offers</string>
+    <string name="user_experience">User Experience : %1$s</string>
+
+    <string name="coming_soon">Coming Soon...</string>
+    <string name="check_internet">Please check your internet connection!</string>
+
+    <string name="recommendation">Recommendations for you!</string>
+
+</resources>

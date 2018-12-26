@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_10"
+        android:textColor="@color/black"
+        android:id="@+id/rec"
+        android:layout_marginTop="@dimen/text_5"
+        android:layout_marginStart="@dimen/size_3"
+        android:text="@string/recommendation"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:textSize="@dimen/text_10"
+        android:textColor="@color/bg_light_gray"
+        android:id="@+id/border"
+        android:layout_below="@id/rec"
+        android:layout_marginTop="@dimen/size_2"
+        android:background="@color/bg_light_gray"
+        />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/border"
+        android:layout_marginTop="@dimen/text_5"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lbl"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_7"
+        android:layout_centerInParent="true"
+        android:text="@string/check_internet"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>
