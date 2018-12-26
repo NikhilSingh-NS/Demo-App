@@ -8,16 +8,9 @@ import com.nikhil.restaurantsapp.viewmodels.RestaurantsViewModel;
 
 public class RestaurantsViewModelFactory implements ViewModelProvider.Factory{
 
-    private long cityId;
-
-    public RestaurantsViewModelFactory(long cityId)
-    {
-        this.cityId = cityId;
-    }
-
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new RestaurantsViewModel(cityId);
+        return (T) new RestaurantsViewModel();
     }
 }

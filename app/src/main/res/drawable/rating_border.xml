@@ -4,5 +4,5 @@
     <stroke android:color="@color/bg_light_gray"
         android:width="@dimen/size_1"/>
     <corners
-        android:radius="@dimen/size_3" />
+        android:radius="@dimen/size_5" />
 </shape>

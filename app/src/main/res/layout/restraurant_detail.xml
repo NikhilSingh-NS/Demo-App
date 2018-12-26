@@ -14,8 +14,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_85"
                 android:id="@+id/image"
-                android:scaleType="fitXY"
-            />
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_restaurant_black_24dp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"

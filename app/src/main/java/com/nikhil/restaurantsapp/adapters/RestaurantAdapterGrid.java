@@ -1,6 +1,5 @@
 package com.nikhil.restaurantsapp.adapters;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -58,7 +57,10 @@ public class RestaurantAdapterGrid extends RecyclerView.Adapter<RestaurantAdapte
 
         holder.textView.setText(restaurant.getName());
         if(Utility.isValidStr(restaurant.getThumb()))
-            Picasso.get().load(restaurant.getThumb()).into(holder.imageView);
+            Picasso.get().load(restaurant.getThumb()).placeholder(R.drawable.ic_restaurant_black_24dp).into(holder.imageView);
+
+        holder.imageView.setTag(restaurant);
+        holder.imageView.setOnClickListener(clickListener);
 
         holder.mView.setTag(restaurant);
         holder.mView.setOnClickListener(clickListener);
@@ -85,7 +87,7 @@ public class RestaurantAdapterGrid extends RecyclerView.Adapter<RestaurantAdapte
         }
     }
 
-    View.OnClickListener clickListener = new View.OnClickListener() {
+    private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Restaurants.Restaurant restaurant = (Restaurants.Restaurant) view.getTag();

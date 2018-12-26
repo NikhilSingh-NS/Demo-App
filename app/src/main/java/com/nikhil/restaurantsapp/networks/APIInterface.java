@@ -17,4 +17,8 @@ public interface APIInterface {
 
     @GET(Constant.SEARCH_RESTAURANTS)
     Call<ServerResponses> searchRestaurantsAsPaging(@Query("entity_id") long entityId, @Query("entity_type") String entityType, @Query("start") long start, @Query("category") long categoryId);
+
+    @GET(Constant.SEARCH_LOCATIONS)
+    Call<ServerResponses> searchLocations(@Query("query") String query);
+
 }

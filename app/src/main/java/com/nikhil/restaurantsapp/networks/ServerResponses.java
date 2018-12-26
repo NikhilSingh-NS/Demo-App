@@ -1,6 +1,7 @@
 package com.nikhil.restaurantsapp.networks;
 
 import com.nikhil.restaurantsapp.entity.Categories;
+import com.nikhil.restaurantsapp.entity.Location;
 import com.nikhil.restaurantsapp.entity.Restaurants;
 
 import java.util.List;
@@ -13,7 +14,19 @@ public class ServerResponses {
         return categories;
     }
 
+    private List<Restaurants> restaurants;
+
+    private List<Location> location_suggestions;
+
     private long results_found;
+
+    public List<Location> getLocation_suggestions() {
+        return location_suggestions;
+    }
+
+    public void setLocation_suggestions(List<Location> location_suggestions) {
+        this.location_suggestions = location_suggestions;
+    }
 
     public void setCategories(List<Categories> categories) {
         this.categories = categories;
@@ -54,5 +67,4 @@ public class ServerResponses {
     private long results_start;
     private long results_shown;
 
-    private List<Restaurants> restaurants;
 }

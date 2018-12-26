@@ -12,7 +12,11 @@
     card_view:cardCornerRadius="@dimen/size_5"
     card_view:cardPreventCornerOverlap="true"
     card_view:cardElevation="@dimen/size_2"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardUseCompatPadding="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    >
 
 
         <ImageView
@@ -20,6 +24,7 @@
             android:layout_height="@dimen/size_50"
             android:id="@+id/image"
             android:scaleType="fitXY"
+            android:src="@drawable/ic_restaurant_black_24dp"
             />
 
         <TextView

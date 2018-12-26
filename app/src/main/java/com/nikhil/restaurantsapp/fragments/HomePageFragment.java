@@ -2,28 +2,37 @@ package com.nikhil.restaurantsapp.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nikhil.restaurantsapp.MainActivity;
 import com.nikhil.restaurantsapp.R;
 import com.nikhil.restaurantsapp.adapters.AdapterInterface;
 import com.nikhil.restaurantsapp.adapters.HomePageAdapter;
+import com.nikhil.restaurantsapp.comp.RecyclerViewMargin;
 import com.nikhil.restaurantsapp.entity.Categories;
 import com.nikhil.restaurantsapp.entity.Constant;
+import com.nikhil.restaurantsapp.entity.Location;
 import com.nikhil.restaurantsapp.entity.Restaurants;
 import com.nikhil.restaurantsapp.entity.Utility;
 import com.nikhil.restaurantsapp.viewmodels.CategoryViewModel;
+import com.nikhil.restaurantsapp.viewmodels.LocationViewModel;
 import com.nikhil.restaurantsapp.viewmodels.RestaurantsViewModel;
-import com.nikhil.restaurantsapp.viewmodelsfactory.RestaurantsViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,15 +46,24 @@ public class HomePageFragment extends BaseFragment{
     TextView lbl;
     CategoryViewModel categoryViewModel;
     RestaurantsViewModel restaurantsViewModel;
+    LocationViewModel locationViewModel;
     HomePageAdapter homePageAdapter;
     List<Categories.Category> categoriesList;
     HashMap<Long,List<Restaurants>> restaurantHashMap;
-    long cityId = 1L;
+
+    ImageView search;
+    EditText query;
+    long cityId;
+    String currentCity;
 
     @Override
     public void onCreate(Bundle bundle)
     {
         super.onCreate(bundle);
+        categoriesList = new ArrayList<>();
+        restaurantHashMap = new HashMap<>();
+        currentCity = Constant.DEFAULT_CITY;
+        showPrg(getString(R.string.pls_wait));
     }
 
     @Override
@@ -53,11 +71,16 @@ public class HomePageFragment extends BaseFragment{
 
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.home_page, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView = view.findViewById(R.id.recycler_view);
+        query = view.findViewById(R.id.query);
+        search = view.findViewById(R.id.search);
 
         lbl = view.findViewById(R.id.lbl);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+        RecyclerViewMargin decoration = new RecyclerViewMargin(0, 0, getResources().getDimensionPixelSize(R.dimen.size_4), 0);
+        recyclerView.addItemDecoration(decoration);
 
         return view;
     }
@@ -66,10 +89,26 @@ public class HomePageFragment extends BaseFragment{
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        categoriesList = new ArrayList<>();
-        restaurantHashMap = new HashMap<>();
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadRestaurants();
+            }
+        });
+
+        query.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    loadRestaurants();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         setHomePageAdapter();
-        initialiseViewModels();
         initList();
     }
 
@@ -77,8 +116,12 @@ public class HomePageFragment extends BaseFragment{
     {
         if(Utility.isInternetConnected(getActivity()))
         {
-                showPrg(getString(R.string.pls_wait));
-                categoryViewModel.getCategories().observe(this, categoriesObservers);
+            locationViewModel = ViewModelProviders.of(this).get(LocationViewModel.class);
+            categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
+            restaurantsViewModel = ViewModelProviders.of(this).get(RestaurantsViewModel.class);
+
+            query.setText(currentCity);
+            loadRestaurants();
         }
         else
         {
@@ -86,6 +129,7 @@ public class HomePageFragment extends BaseFragment{
                 lbl.setVisibility(View.VISIBLE);
             else
                 lbl.setVisibility(View.GONE);
+            hidePrg();
         }
     }
 
@@ -95,12 +139,45 @@ public class HomePageFragment extends BaseFragment{
         recyclerView.setAdapter(homePageAdapter);
     }
 
-
-    private void initialiseViewModels()
+    private void loadRestaurants()
     {
-        categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
-        restaurantsViewModel = ViewModelProviders.of(HomePageFragment.this, new RestaurantsViewModelFactory(cityId)).get(RestaurantsViewModel.class);
+        query.clearFocus();
+        InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(query.getWindowToken(), 0);
+
+        if(Utility.isInternetConnected(getActivity()))
+        {
+            String city = query.getText().toString();
+            locationViewModel.getLocationSuggestionsFromApi(city).observe(this, locationObserver);
+
+        }
+        else
+        {
+            Toast.makeText(getActivity(), getString(R.string.check_internet), Toast.LENGTH_SHORT).show();
+        }
     }
+
+    Observer<List<Location>> locationObserver = new Observer<List<Location>>() {
+        @Override
+        public void onChanged(@Nullable List<Location> locations) {
+            if(locations.size() > 0) {
+                Location location = locations.get(0);
+                query.setText(location.getCity_name());
+                currentCity = location.getCity_name();
+                if(cityId != location.getCity_id())
+                {
+                    cityId = location.getCity_id();
+                    Log.d("fatal", "cityId : " + cityId);
+                    showPrg(getString(R.string.pls_wait));
+                    categoryViewModel.getCategoryFromAPI().observe(HomePageFragment.this, categoriesObservers);
+                }
+            }
+            else
+            {
+                Toast.makeText(getActivity(), getString(R.string.try_search_better), Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     Observer<List<Categories>> categoriesObservers = new Observer<List<Categories>>() {
         @Override
@@ -109,13 +186,14 @@ public class HomePageFragment extends BaseFragment{
             restaurantHashMap.clear();
             boolean isLast = false;
             int size = categories.size();
+            Log.d("fatal", "size:" + size);
             for (int i=0;i<size;i++)
             {
                 Categories.Category category = categories.get(i).getCategory();
                 categoriesList.add(category);
                 if(i == size-1)
                     isLast = true;
-                restaurantsViewModel.getRestaurantList(0, category.getId()).observe(HomePageFragment.this, new ListObserver(category, isLast));
+                restaurantsViewModel.getRestaurantListFromApi(cityId, category.getId(), i+2).observe(HomePageFragment.this, new ListObserver(category, isLast));
             }
         }
     };

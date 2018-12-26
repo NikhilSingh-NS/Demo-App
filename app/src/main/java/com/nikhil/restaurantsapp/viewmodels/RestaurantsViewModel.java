@@ -13,22 +13,17 @@ import static com.nikhil.restaurantsapp.entity.Constant.TYPE_CITY;
 
 public class RestaurantsViewModel extends ViewModel {
 
-    private long cityId;
-    LiveData<List<Restaurants>> restaurantList;
+    private LiveData<List<Restaurants>> restaurantList;
     private APIRepo apiRepo;
 
-    public RestaurantsViewModel(long cityId)
-    {
-        this.cityId = cityId;
+    public RestaurantsViewModel() {
         apiRepo = new APIRepo();
     }
 
-    public LiveData<List<Restaurants>> getRestaurantList(int start, long categoryId) {
-        return getRestaurantsFromAPI(start, categoryId);
-    }
-
-    private LiveData<List<Restaurants>> getRestaurantsFromAPI(int start, long categoryId)
-    {
+    public LiveData<List<Restaurants>> getRestaurantListFromApi(long cityId, long categoryId,int start) {
         return apiRepo.getRestaurantsFromAPI(cityId, TYPE_CITY, start, ROW_COUNT, categoryId);
     }
+
+
+
 }

@@ -1,6 +1,5 @@
 package com.nikhil.restaurantsapp.adapters;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -43,7 +42,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         holder.textView.setText(restaurant.getName());
         holder.address.setText(restaurant.getLocation().getLocality_verbose());
         if(Utility.isValidStr(restaurant.getThumb()))
-            Picasso.get().load(restaurant.getThumb()).into(holder.imageView);
+            Picasso.get().load(restaurant.getThumb()).placeholder(R.drawable.ic_restaurant_black_24dp).into(holder.imageView);
         if(Utility.isValidStr(restaurant.getCuisines()))
             holder.cuisines.setText(restaurant.getCuisines());
         holder.ratings.setText(restaurant.getUser_rating().getAggregate_rating());

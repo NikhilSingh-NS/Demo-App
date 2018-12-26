@@ -15,6 +15,7 @@ import com.nikhil.restaurantsapp.R;
 import com.nikhil.restaurantsapp.entity.Categories;
 import com.nikhil.restaurantsapp.entity.Restaurants;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -89,6 +90,8 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ChildH
     {
         RecyclerView.Adapter adapter;
         String type = ADAPTER_TYPES[i%ADAPTER_TYPES.length];
+        if(restaurantHashMap.get(categoryId) == null)
+            restaurantHashMap.put(categoryId, new ArrayList<Restaurants>());
         switch (type)
         {
             case "TYPE_2":

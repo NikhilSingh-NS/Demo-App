@@ -43,7 +43,7 @@ public class RestaurantsAdapterTwo extends RecyclerView.Adapter<RestaurantsAdapt
 
         holder.textView.setText(restaurant.getName());
         if(Utility.isValidStr(restaurant.getThumb()))
-            Picasso.get().load(restaurant.getThumb()).into(holder.imageView);
+            Picasso.get().load(restaurant.getThumb()).placeholder(R.drawable.ic_restaurant_black_24dp).into(holder.imageView);
         holder.price.setText(context.getString(R.string.price_for_two, restaurant.getAverage_cost_for_two()));
 
         holder.mView.setTag(restaurant);

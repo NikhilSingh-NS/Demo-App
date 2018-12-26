@@ -46,7 +46,7 @@ public class RestaurantPagedListAdapter extends PagedListAdapter<Restaurants, Re
 
         holder.name.setText(restaurant.getName());
         if(Utility.isValidStr(restaurant.getThumb()))
-            Picasso.get().load(restaurant.getThumb()).transform(new PicassoTransformation()).into(holder.imageView);
+            Picasso.get().load(restaurant.getThumb()).placeholder(R.drawable.ic_restaurant_black_24dp).transform(new PicassoTransformation()).into(holder.imageView);
 
         holder.cuisines.setText(restaurant.getCuisines());
         holder.locality.setText(restaurant.getLocation().getLocality_verbose());

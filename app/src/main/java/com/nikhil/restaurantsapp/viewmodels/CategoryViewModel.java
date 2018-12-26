@@ -4,10 +4,8 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.nikhil.restaurantsapp.entity.Categories;
-import com.nikhil.restaurantsapp.entity.Restaurants;
 import com.nikhil.restaurantsapp.networks.APIRepo;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class CategoryViewModel extends ViewModel{
@@ -25,7 +23,7 @@ public class CategoryViewModel extends ViewModel{
         return categories;
     }
 
-    private LiveData<List<Categories>> getCategoryFromAPI()
+    public LiveData<List<Categories>> getCategoryFromAPI()
     {
         return apiRepo.getCategoryFromAPI();
     }

@@ -1,6 +1,8 @@
 package com.nikhil.restaurantsapp.entity;
 
-public class UserRatings {
+import java.io.Serializable;
+
+public class UserRatings implements Serializable{
     public String getAggregate_rating() {
         return aggregate_rating;
     }

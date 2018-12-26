@@ -35,5 +35,9 @@
     <string name="check_internet">Please check your internet connection!</string>
 
     <string name="recommendation">Recommendations for you!</string>
+    
+    <string name="try_search_better">Try search with better city name!</string>
+
+    <string name="city_hint">Search your city here...</string>
 
 </resources>

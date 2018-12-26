@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.nikhil.restaurantsapp.R;
 import com.nikhil.restaurantsapp.entity.Restaurants;
+import com.nikhil.restaurantsapp.entity.Utility;
 import com.squareup.picasso.Picasso;
 
 public class DetailPageFragment extends BaseFragment {
@@ -43,13 +44,15 @@ public class DetailPageFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+        init();
 
-        if(savedInstanceState == null)
-            init();
-        else
-            restaurant = (Restaurants.Restaurant) savedInstanceState.getSerializable("RESTAURANT");
+        if(Utility.isValidStr(restaurant.getFeatured_image()))
+        {
+            int height = getActivity().getResources().getDimensionPixelSize(R.dimen.size_85);
+            int width = getActivity().getResources().getDimensionPixelSize(R.dimen.size_170);
+            Picasso.get().load(restaurant.getFeatured_image()).placeholder(R.drawable.ic_restaurant_black_24dp).resize(width, height).into(imageView);
+        }
 
-        Picasso.get().load(restaurant.getThumb()).into(imageView);
         nameText.setText(restaurant.getName());
         ratingText.setText(restaurant.getUser_rating().getAggregate_rating());
         Drawable drawable = ratingText.getBackground();
@@ -74,12 +77,5 @@ public class DetailPageFragment extends BaseFragment {
     {
         Bundle bundle = getArguments();
         restaurant = (Restaurants.Restaurant) bundle.getSerializable("RESTAURANT");
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable("RESTAURANT", restaurant);
     }
 }

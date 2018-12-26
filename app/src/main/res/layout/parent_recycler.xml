@@ -17,7 +17,7 @@
 
      <TextView
          android:id="@+id/see_all"
-         android:layout_width="@dimen/size_30"
+         android:layout_width="wrap_content"
          android:layout_height="@dimen/size_10"
          android:layout_alignParentEnd="true"
          android:layout_marginEnd="@dimen/size_10"
@@ -27,6 +27,7 @@
          android:textSize="@dimen/text_7"
          android:gravity="center"
          android:layout_marginTop="@dimen/size_2"
+         android:drawableEnd="@drawable/ic_arrow_forward"
          />
 
 
@@ -35,10 +36,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:padding="@dimen/size_5"
+            android:padding="@dimen/size_3"
             android:orientation="horizontal"
             android:layout_below="@+id/header"
             android:layout_centerInParent="true"
+         />
+
+     <TextView
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/size_1"
+         android:background="@color/bg_light_gray"
+         android:layout_marginStart="@dimen/size_25"
+         android:layout_marginEnd="@dimen/size_25"
+         android:visibility="gone"
          />
 
     </RelativeLayout>

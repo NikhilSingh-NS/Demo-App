@@ -3,7 +3,6 @@ package com.nikhil.restaurantsapp.networks;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.nikhil.restaurantsapp.entity.Constant;
 
 import java.io.IOException;
@@ -19,7 +18,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class APIClient {
 
     private static Retrofit retrofit = null;
-    private static Gson gson = new Gson();
     private static String TAG = APIClient.class.getName() + " fatal";
 
     public static synchronized Retrofit getClient()

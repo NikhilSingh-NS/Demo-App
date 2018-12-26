@@ -22,8 +22,6 @@ import com.nikhil.restaurantsapp.entity.Restaurants;
 import com.nikhil.restaurantsapp.entity.Utility;
 import com.nikhil.restaurantsapp.viewmodels.RestaurantsPagedViewModel;
 
-import org.w3c.dom.Text;
-
 public class RestaurantListFragment extends BaseFragment {
 
     public final static String TAG = RestaurantListFragment.class.getName();
@@ -37,13 +35,6 @@ public class RestaurantListFragment extends BaseFragment {
     Categories.Category category;
 
     TextView lbl, categoryName;
-
-    @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
-        super.onSaveInstanceState(outState);
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

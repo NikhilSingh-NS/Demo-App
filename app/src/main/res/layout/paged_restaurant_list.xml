@@ -39,6 +39,7 @@
         android:id="@+id/border"
         android:layout_below="@id/rec"
         android:layout_marginTop="@dimen/size_2"
+        android:visibility="gone"
         />
 
 
